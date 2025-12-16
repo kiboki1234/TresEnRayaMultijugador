@@ -1,8 +1,15 @@
 import { roomManager } from '../services/RoomManager.js';
 
+const broadcastRooms = (io) => {
+    io.emit('rooms_update', roomManager.getAvailableRooms());
+};
+
 export const setupSocket = (io) => {
     io.on('connection', (socket) => {
         console.log('User connected:', socket.id);
+
+        // Send available rooms immediately
+        socket.emit('rooms_update', roomManager.getAvailableRooms());
 
         socket.on('join_room', (roomId) => {
             let room = roomManager.getRoom(roomId);
@@ -20,6 +27,9 @@ export const setupSocket = (io) => {
 
                 // Broadcast updated state
                 io.to(roomId).emit('game_update', room.getState());
+
+                // Broadcast room list update
+                broadcastRooms(io);
             } else {
                 socket.emit('error', 'Room is full');
             }
@@ -55,6 +65,8 @@ export const setupSocket = (io) => {
                 if (room.players.length === 0) {
                     roomManager.deleteRoom(room.id);
                 }
+                // Broadcast room list update
+                broadcastRooms(io);
             }
         });
     });

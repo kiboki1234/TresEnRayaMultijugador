@@ -30,6 +30,19 @@ class RoomManager {
         }
         return null;
     }
+
+    getAvailableRooms() {
+        const available = [];
+        for (const room of this.rooms.values()) {
+            if (room.players.length < 2) {
+                available.push({
+                    id: room.id,
+                    players: room.players.length
+                });
+            }
+        }
+        return available;
+    }
 }
 
 export const roomManager = new RoomManager();

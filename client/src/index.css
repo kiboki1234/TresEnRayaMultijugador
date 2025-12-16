@@ -39,7 +39,7 @@ body {
   background: var(--card-bg);
   padding: 2rem;
   border-radius: 1rem;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   width: 100%;
   text-align: center;
 }
@@ -50,9 +50,11 @@ body {
   margin-bottom: 1rem;
   border-radius: 0.5rem;
   border: 2px solid var(--text-secondary);
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
   color: white;
   font-size: 1rem;
+  box-sizing: border-box;
+  /* Fix padding issue */
 }
 
 .btn {
@@ -80,8 +82,44 @@ body {
   color: var(--accent);
 }
 
+.btn.small {
+  padding: 0.5rem 1rem;
+  width: auto;
+  font-size: 0.9rem;
+  background: var(--text-secondary);
+  color: white;
+}
+
+.btn.small:hover {
+  background: var(--accent);
+}
+
 .divider {
   margin: 1.5rem 0;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+/* Room List */
+.room-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.room-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.room-item:last-child {
+  border-bottom: none;
+}
+
+.player-count {
   color: #888;
   font-size: 0.9rem;
 }
@@ -123,8 +161,13 @@ body {
   background: #1f3050;
 }
 
-.cell.x { color: var(--x-color); }
-.cell.o { color: var(--o-color); }
+.cell.x {
+  color: var(--x-color);
+}
+
+.cell.o {
+  color: var(--o-color);
+}
 
 .status {
   font-size: 1.5rem;
@@ -144,8 +187,13 @@ body {
   color: #888;
 }
 
-.symbol.X { color: var(--x-color); }
-.symbol.O { color: var(--o-color); }
+.symbol.X {
+  color: var(--x-color);
+}
+
+.symbol.O {
+  color: var(--o-color);
+}
 
 .error-banner {
   background: #ff4757;

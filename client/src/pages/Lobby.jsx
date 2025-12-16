@@ -1,7 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSocket } from '../hooks/useSocket';
+import { useRooms } from '../hooks/useRooms';
 
 export const Lobby = ({ joinRoom }) => {
     const [roomId, setRoomId] = useState('');
+    const { rooms } = useRooms();
+    const { connect } = useSocket();
+
+    // Ensure socket is connected to receive room updates
+    useEffect(() => {
+        connect();
+    }, [connect]);
 
     const handleCreate = () => {
         const newId = Math.random().toString(36).substring(7);
@@ -36,6 +45,26 @@ export const Lobby = ({ joinRoom }) => {
                     </button>
                 </form>
             </div>
+
+            {rooms.length > 0 && (
+                <div className="card" style={{ marginTop: '2rem' }}>
+                    <h3>Available Rooms</h3>
+                    <ul className="room-list">
+                        {rooms.map((room) => (
+                            <li key={room.id} className="room-item">
+                                <span>Room: {room.id}</span>
+                                <span className="player-count">({room.players}/2)</span>
+                                <button
+                                    className="btn small"
+                                    onClick={() => joinRoom(room.id)}
+                                >
+                                    Join
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
         </div>
     );
 };
